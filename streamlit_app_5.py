@@ -5,6 +5,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import os
+!pip install joblib
 from joblib import dump, load
 from sklearn.linear_model import LinearRegression, LogisticRegression
 from sklearn.tree import DecisionTreeRegressor
