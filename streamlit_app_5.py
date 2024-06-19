@@ -1,5 +1,4 @@
 # STREAMLIT TO DEMONSTRATE WORK ON CO2 EMISSIONS BY CARS IN FRANCE 2015
-
 # necessary imports
 import streamlit as st
 import pandas as pd
