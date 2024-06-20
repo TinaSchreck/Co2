@@ -126,95 +126,48 @@ if page == pages[3] :
   st.image("boxplot energy classes.png")
 
 
-# work on fourth page ###############################################################################################
-if page == pages[4] : 
-  st.text("")
-  st.text("")
-  st.text("")
-  st.write("### Modeling Regression")
+# work on fourth page
+if page == pages[4]:
+    st.write("### Modeling Regression")
+    X = df.drop(['CO2 in g/km', 'Brand'], axis=1)
+    y = df['CO2 in g/km']
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    from sklearn.preprocessing import StandardScaler
+    sc = StandardScaler()
+    X_train = sc.fit_transform(X_train)
+    X_test = sc.transform(X_test)
 
-  # separation of dataset into training and test set and deleting the variable Brand
-  X = df.drop(['CO2 in g/km', 'Brand'], axis=1)
-  y = df['CO2 in g/km']
+    files = ['DecisionTreeRegressor.h5', 'KNeighborsRegressor.h5', 'LinearRegression.h5', 'LogisticRegression.h5']
+    names = ['Decision Tree', 'KNeighbors', 'Linear Regression', 'Logistic Regression']
 
-  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    reg_models = []
+    for file_name, name in zip(files, names):
+        with h5py.File(file_name, 'r') as f:
+            model = joblib.loads(f['model'][()])
+        reg_models.append((name, model))
 
-  # transformation of test set
-  from sklearn.preprocessing import StandardScaler
-  sc = StandardScaler()
-  X_train = sc.fit_transform(X_train)
-  X_test = sc.transform(X_test)
-
-  # define names and of files and models
-  files = ['DecisionTreeRegressor().joblib', 'KNeighborsRegressor().joblib', 'LinearRegression().joblib','LogisticRegression().joblib']
-  names = ['Decision Tree', 'KNeighbors', 'Linear Regression','Logistic Regression']
-
-  reg_models = []
-
-  # load models and add to list 
-  for file_name, name in zip(files, names):
-    model = load(file_name)
-    reg_models.append((name, model))
-
-  # choice of classification model
-  selected_model_name = st.selectbox('Choice of regression model', names, key='choice_reg_model')
-  ('The chosen regression model is:', selected_model_name)
-
-  # perform analysis after an option has been selected
-  if selected_model_name:
-    # finding the chosen model
-    selected_model = None
-    for name, model in reg_models:
-        if name == selected_model_name:
-            selected_model = model
-            break
-    
-    # perform analysis after chosen model has been found
-    if selected_model:
-        # analysis for model
-        #(f"Model '{selected_model_name}' geladen:", selected_model)
-        
-        # code for analysis
+    selected_model_name = st.selectbox('Choice of regression model', names, key='choice_reg_model')
+    if selected_model_name:
+        selected_model = next(model for name, model in reg_models if name == selected_model_name)
         y_pred = selected_model.predict(X_test)
-        #st.write('r_squared of', model,'on test set:',round(r2_score(y_test, y_pred),4))
-        #st.write('Mean Squared Error (MSE) on', model,':', round(mean_squared_error(y_test, y_pred),2))
-
-  def scores(reg_model,choice):
-    if choice == 'R2':
-      return reg_model.r2_score(y_test,y_pred )
-    elif choice == 'MSE':
-      return mean_squared_error(y_test,y_pred) 
-
-  choice = model
-  display = st.radio('What do you want to show ?', ('R2', 'MSE'))
-  if display == 'R2':
-    st.write(round(r2_score(y_test,y_pred),3))
-  elif display == 'MSE':
-    st.write(round(mean_squared_error(y_test,y_pred),3))
-    
-  st.subheader("Short overview of real and predicted values")
-  y_pred = pd.DataFrame(y_pred)
-  y_pred.rename(columns={0: 'Predicted CO2 emissions in g/km'}, inplace=True)
-  #st.dataframe(y_pred.head(11))
-
-  #st.text("short overview of real values")
-  y_test = pd.DataFrame(y_test)
-  y_test.rename(columns={0: 'Real CO2 emissions in g/km'}, inplace=True)
-  #st.dataframe(y_test.head(11))
-
-  st.write(
-    f"""
-    <div style="display:flex">
-        <div style="flex:50%;padding-right:10px;">
-            {y_test.head(11).to_html()}
+        display = st.radio('What do you want to show ?', ('R2', 'MSE'))
+        if display == 'R2':
+            st.write(round(r2_score(y_test, y_pred), 3))
+        elif display == 'MSE':
+            st.write(round(mean_squared_error(y_test, y_pred), 3))
+        st.subheader("Short overview of real and predicted values")
+        y_pred_df = pd.DataFrame(y_pred, columns=['Predicted CO2 emissions in g/km'])
+        y_test_df = y_test.reset_index(drop=True)
+        st.write(f"""
+        <div style="display:flex">
+            <div style="flex:50%;padding-right:10px;">
+                {y_test_df.head(11).to_html()}
+            </div>
+            <div style="flex:50%">
+                {y_pred_df.head(11).to_html()}
+            </div>
         </div>
-        <div style="flex:50%">
-            {y_pred.head(11).to_html()}
-        </div>
-    </div>
-    """,
-    unsafe_allow_html=True
-            )
+        """, unsafe_allow_html=True)
 # work on fifth page ##############################################################################################
 if page == pages[5] : 
   st.text("")
