@@ -146,7 +146,7 @@ if page == pages[4] :
   X_test = sc.transform(X_test)
 
   # define names and of files and models
-  files = ['DecisionTreeRegressor().joblib', 'KNeighborsRegressor().joblib', 'LinearRegression().joblib','LogisticRegression().joblib']
+  files = ['DecisionTreeRegressor()(Kopie).joblib', 'KNeighborsRegressor().joblib', 'LinearRegression().joblib','LogisticRegression().joblib']
   names = ['Decision Tree', 'KNeighbors', 'Linear Regression','Logistic Regression']
 
   reg_models = []
