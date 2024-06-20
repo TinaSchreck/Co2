@@ -214,6 +214,8 @@ if page == pages[4] :
     </div>
     """,
     unsafe_allow_html=True
+  )
+  
 # work on fifth page ##############################################################################################
 if page == pages[5] : 
   st.text("")
