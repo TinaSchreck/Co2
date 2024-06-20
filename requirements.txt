@@ -6,3 +6,4 @@ seaborn
 numpy
 pandas
 streamlit
+h5py
