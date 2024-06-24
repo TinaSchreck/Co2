@@ -168,9 +168,7 @@ if page == pages[4] :
   imputer = SimpleImputer()
   x_test = imputer.fit_transform(x_test)
 
-  # perform analysis after chosen model found
-  if selected_regression_model:
-    y_pred = selected_regression_model.predict(x_test)
+  
 
 
 # work on fifth page ##############################################################################################
