@@ -145,12 +145,17 @@ if page == pages[4] :
     reg_models.append((name,model))
 
   # choice of regression model
+  selected_regression_model = st.selectbox('Choice of regression model:', names)
+  st.write(f'The choosen regression model is: {selected_regression_model}')
 
-  # Erstellen der Auswahlbox
-  selected_option = st.selectbox('Choice of regression model:', names)
-
-  # Anzeigen der ausgewählten Option
-  st.write(f'The choosen regression model is: {selected_option}')
+  # perform analysis after model selected
+  if selected_regression_model:
+    #finding choosen model
+    selected_model = None
+    for name, model in reg_models:
+      if name == selected_regression_model:
+        selected_regression_model = model
+        break
   
 # work on fifth page ##############################################################################################
 if page == pages[5] : 
