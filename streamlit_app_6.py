@@ -137,7 +137,12 @@ if page == pages[4] :
   files = ['DecisionTreeRegressor().joblib', 'KNeighborsRegressor().joblib', 'LinearRegression().joblib', 'LogisticRegression().joblib']
   names = ['Decision Tree', 'KNeighbors', 'Linear Regression', 'Logistic Regression']
 
-
+  reg_models = []
+  
+  # load models and add to list
+  for file_name, name in zip(files, names):
+    model = load(file_name)
+    reg.models.append((name,model))
   
 # work on fifth page ##############################################################################################
 if page == pages[5] : 
