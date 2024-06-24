@@ -163,6 +163,12 @@ if page == pages[4] :
         selected_regression_model = model
         break
 
+  from sklearn.impute import SimpleImputer
+
+  # Beispiel für Imputation von fehlenden Werten in X_train
+  imputer = SimpleImputer()
+  X_test = imputer.fit_transform(X_test)
+
   # perform analysis after chosen model found
   if selected_regression_model:
     y_pred = selected_regression_model.predict(X_test)
