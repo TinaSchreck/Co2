@@ -173,9 +173,9 @@ if page == pages[4] :
         st.error(f"Ein Fehler ist aufgetreten: {e}")
 
 
-    # perform analysis after chosen model found
-    if selected_regression_model:
-      y_pred = selected_regression_model.predict(X_test)
+  # perform analysis after chosen model found
+  if selected_regression_model:
+    y_pred = selected_regression_model.predict(X_test)
 
 
 # work on fifth page ##############################################################################################
