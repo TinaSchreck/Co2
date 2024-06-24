@@ -156,7 +156,12 @@ if page == pages[4] :
       if name == selected_regression_model:
         selected_regression_model = model
         break
-  
+
+  # perform analysis after chosen model found
+  if selected_regression_model:
+    y_pred = selected_regression_model.predict(X_test)
+
+
 # work on fifth page ##############################################################################################
 if page == pages[5] : 
   st.text("")
