@@ -157,20 +157,11 @@ if page == pages[4] :
   # perform analysis after model selected
   if selected_regression_model:
     #finding choosen model
-    if selected_regression_model == DecisionTreeRegressor():
-      try:
-        y_pred = selected_regression_model.predict(X_test)
-      except AttributeError as e:
-        st.error(f"Ein Fehler ist aufgetreten: {e}")
-    else:
-      selected_model = None
+    selected_model = None
     for name, model in reg_models:
       if name == selected_regression_model:
         selected_regression_model = model
         break
-
-
-
 
   # perform analysis after chosen model found
   if selected_regression_model:
