@@ -21,7 +21,7 @@ df=pd.read_csv("cleaned_data_France_2015.csv")
 st.title("CO2 emission of cars in France 2015")
 st.sidebar.title("Table of contents")
 pages=["Cover", "Introduction", "Exploration", "DataVisualization", "Modeling Regression", "Preparing for Classification", "Modeling Classification", "Conclusion"]
-page=st.sidebar.radio("Go to", pages)
+page=st.sidebar.radio("Select page", pages)
 
 # work on cover page ##############################################################################################
 if page == pages[0] : 
