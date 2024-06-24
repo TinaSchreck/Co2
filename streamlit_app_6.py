@@ -162,6 +162,19 @@ if page == pages[4] :
       if name == selected_regression_model:
         selected_regression_model = model
         break
+  # Beispiel für die Initialisierung eines Modells
+from sklearn.tree import DecisionTreeRegressor
+
+selected_regression_model = DecisionTreeRegressor()
+
+# Beispielcode, um die Vorhersage zu machen
+X_test = ...  # Ersetze dies durch deine Testdaten
+
+try:
+    y_pred = selected_regression_model.predict(X_test)
+except AttributeError as e:
+    st.error(f"Ein Fehler ist aufgetreten: {e}")
+
 
   # perform analysis after chosen model found
   if selected_regression_model:
