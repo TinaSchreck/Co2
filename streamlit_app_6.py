@@ -143,6 +143,14 @@ if page == pages[4] :
   for file, name in zip(files, names):
     model = load(file)
     reg_models.append((name,model))
+
+  # choice of regression model
+
+  # Erstellen der Auswahlbox
+  selected_option = st.selectbox('Choice of regression model:', names)
+
+  # Anzeigen der ausgewählten Option
+  st.write(f'The choosen regression model is: {selected_option}')
   
 # work on fifth page ##############################################################################################
 if page == pages[5] : 
