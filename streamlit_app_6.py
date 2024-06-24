@@ -165,7 +165,7 @@ if page == pages[4] :
   # Beispiel für die Initialisierung eines Modells
   from sklearn.tree import DecisionTreeRegressor
 
-  if selected_regression_model = DecisionTreeRegressor():
+  if selected_regression_model == DecisionTreeRegressor():
 
     try:
         y_pred = selected_regression_model.predict(X_test)
