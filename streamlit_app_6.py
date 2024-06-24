@@ -134,10 +134,10 @@ if page == pages[4] :
   st.write("### Modeling Regression")
 
   # preparation of dataset
-  X = df.drop(['CO2 in g/km', 'Brand'], axis=1)
+  x = df.drop(['CO2 in g/km', 'Brand'], axis=1)
   y = df['CO2 in g/km']
 
-  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+  x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
 
   # define models
   files = ['DecisionTreeRegressor().joblib', 'KNeighborsRegressor().joblib', 'LinearRegression().joblib', 'LogisticRegression().joblib']
@@ -165,13 +165,12 @@ if page == pages[4] :
 
   from sklearn.impute import SimpleImputer
 
-  # Beispiel für Imputation von fehlenden Werten in X_train
   imputer = SimpleImputer()
-  X_test = imputer.fit_transform(X_test)
+  x_test = imputer.fit_transform(x_test)
 
   # perform analysis after chosen model found
   if selected_regression_model:
-    y_pred = selected_regression_model.predict(X_test)
+    y_pred = selected_regression_model.predict(x_test)
 
 
 # work on fifth page ##############################################################################################
