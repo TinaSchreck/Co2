@@ -286,7 +286,7 @@ if page == pages[6] :
   X_test = sc.transform(X_test)
 
   # define names of files and models
-  files = ['DecisionTreeClassifier().joblib', 'RandomForestClassifier().joblib', 'SVC().joblib']
+  files = ['DecisionTreeClassifier().joblib', 'RandomForestClassifier().h5', 'SVC().joblib']
   names = ['Decision Tree', 'Random Forest', 'SVC']
 
   class_models = []
