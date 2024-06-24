@@ -133,6 +133,12 @@ if page == pages[4] :
   st.text("")
   st.write("### Modeling Regression")
 
+  # preparation of dataset
+  X = df.drop(['CO2 in g/km', 'Brand'], axis=1)
+  y = df['CO2 in g/km']
+
+  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
   # define models
   files = ['DecisionTreeRegressor().joblib', 'KNeighborsRegressor().joblib', 'LinearRegression().joblib', 'LogisticRegression().joblib']
   names = ['Decision Tree', 'KNeighbors', 'Linear Regression', 'Logistic Regression']
