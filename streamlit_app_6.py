@@ -140,9 +140,9 @@ if page == pages[4] :
   reg_models = []
   
   # load models and add to list
-  for file_name, name in zip(files, names):
-    model = load(file_name)
-    reg.models.append((name,model))
+  for file, name in zip(files, names):
+    model = load(file)
+    reg_models.append((name,model))
   
 # work on fifth page ##############################################################################################
 if page == pages[5] : 
