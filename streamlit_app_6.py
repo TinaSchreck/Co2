@@ -133,7 +133,11 @@ if page == pages[4] :
   st.text("")
   st.write("### Modeling Regression")
 
- 
+  # define models
+  files = ['DecisionTreeRegressor().joblib', 'KNeighborsRegressor().joblib', 'LinearRegression().joblib', 'LogisticRegression().joblib']
+  names = ['Decision Tree', 'KNeighbors', 'Linear Regression', 'Logistic Regression']
+
+
   
 # work on fifth page ##############################################################################################
 if page == pages[5] : 
