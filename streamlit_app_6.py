@@ -139,6 +139,12 @@ if page == pages[4] :
 
   x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
 
+   # transformation of test set
+  from sklearn.preprocessing import StandardScaler
+  sc = StandardScaler()
+  X_train = sc.fit_transform(X_train)
+  X_test = sc.transform(X_test) 
+  
   # define models
   files = ['DecisionTreeRegressor().joblib', 'KNeighborsRegressor().joblib', 'LinearRegression().joblib', 'LogisticRegression().joblib']
   names = ['Decision Tree', 'KNeighbors', 'Linear Regression', 'Logistic Regression']
@@ -162,13 +168,17 @@ if page == pages[4] :
       if name == selected_regression_model:
         selected_regression_model = model
         break
-
-  from sklearn.impute import SimpleImputer
-
-  imputer = SimpleImputer()
-  x_test = imputer.fit_transform(x_test)
-
-  
+        
+  # perform analysis after chosen model has been found
+    if selected_model:
+        # analysis for model
+        #(f"Model '{selected_model_name}' geladen:", selected_model)
+        
+        # code for analysis
+        y_pred = selected_model.predict(X_test)
+        #st.write('r_squared of', model,'on test set:',round(r2_score(y_test, y_pred),4))
+        #st.write('Mean Squared Error (MSE) on', model,':', round(mean_squared_error(y_test, y_pred),2))
+ 
 
 
 # work on fifth page ##############################################################################################
