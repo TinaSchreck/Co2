@@ -179,7 +179,18 @@ if page == pages[4] :
         #st.write('r_squared of', model,'on test set:',round(r2_score(y_test, y_pred),4))
         #st.write('Mean Squared Error (MSE) on', model,':', round(mean_squared_error(y_test, y_pred),2))
  
+   def scores(reg_model,choice):
+    if choice == 'R2':
+      return reg_model.r2_score(y_test,y_pred )
+    elif choice == 'MSE':
+      return mean_squared_error(y_test,y_pred) 
 
+  choice = model
+  display = st.radio('What do you want to show ?', ('R2', 'MSE'))
+  if display == 'R2':
+    st.write(round(r2_score(y_test,y_pred),3))
+  elif display == 'MSE':
+    st.write(round(mean_squared_error(y_test,y_pred),3))
 
 # work on fifth page ##############################################################################################
 if page == pages[5] : 
