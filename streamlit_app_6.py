@@ -185,7 +185,7 @@ if page == pages[4] :
     elif choice == 'MSE':
       return mean_squared_error(y_test,y_pred) 
 
-  y_pred = pd.DataFrame(y_pred)
+  
   y_pred.rename(columns={0: 'Predicted CO2 emissions in g/km'}, inplace=True)
   choice = model
   display = st.radio('What do you want to show ?', ('R2', 'MSE'))
