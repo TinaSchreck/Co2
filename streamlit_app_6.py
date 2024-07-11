@@ -251,6 +251,116 @@ if page == pages[6] :
   st.text("")
   st.write("### Modeling Classification")
 
+  ######FOR SAVING MODELS
+  #from joblib import dump
+  # saving of the model(after training)
+  # dump(model, 'filename.joblib')
+  # loading of the model (via streamlit app)
+  #model = load('filename.joblib')
+
+  #def load_files_from_folder(folder_path, file_extension):
+  #    files = [f for f in os.listdir(folder_path) if f.endswith(file_extension)]
+  #   return files
+
+  #def load_files_from_folder('\documents', joblib):
+  #   files = [f for f in os.listdir('\documents') if f.endswith(joblib)]
+  #  return files
+   
+  df = pd.read_csv('df_class.csv')
+
+
+  # separation of dataset into training and test set and dropping not needed variables for classification
+  X = df.drop(['Unnamed: 0','Urban consumption in l/100km','Rural consumption in l/100km','energy'], axis=1)
+  y = df['energy']
+
+  from sklearn.model_selection import train_test_split
+  from sklearn.metrics import classification_report
+
+  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+  # transformation of test set
+  from sklearn.preprocessing import StandardScaler
+  sc = StandardScaler()
+  X_train = sc.fit_transform(X_train)
+  X_test = sc.transform(X_test)
+
+  # define names of files and models
+  files = ['DecisionTreeClassifier().joblib', 'RandomForestClassifier().h5', 'SVC().joblib']
+  names = ['Decision Tree', 'Random Forest', 'SVC']
+
+  class_models = []
+
+  # load models and add to list
+  for file_name, name in zip(files, names):
+    model = load(file_name)
+    class_models.append((name, model))
+
+  # choice of classification model
+  selected_model_name = st.selectbox('Choice of classification model', names, key='choice_class_model')
+  st.write('The chosen classification model is:', selected_model_name)
+
+  # perform analysis after a model has been chosen
+  if selected_model_name:
+    # finding the chosen model 
+    selected_model = None
+    for name, model in class_models:
+        if name == selected_model_name:
+            selected_model = model
+            break
+    
+    # perform analysis if model has been found
+    if selected_model:
+        # perform analysis for the model
+        #st.write(f"Model '{selected_model_name}' geladen:", selected_model)
+        
+        # code for analysis
+  
+      y_pred = selected_model.predict(X_test)
+      accuracy = round(selected_model.score(X_test, y_test), 2)
+      st.write('Accuracy of', selected_model_name, 'on test set:', accuracy)
+
+  ct = pd.crosstab(y_test, y_pred, rownames=['True'], colnames=['Predicted'])
+  st.write('The confusion matrix of', selected_model_name, 'is:')
+  st.write(ct)
+  
+  report = classification_report(y_test, y_pred, output_dict=True)
+  print(report)
+
+  # Convert classification report to DataFrame for easier manipulation
+  report_df = pd.DataFrame(report).transpose()
+
+  # Display the classification report as a table
+  st.write('The classification report  of', selected_model_name, 'is:')
+  st.dataframe(report_df)
+
+  #st.write('The classification report of', selected_model_name, 'is:')
+  #st.write(classification_report(y_test, y_pred))
+
+  st.subheader("Short overview of real and predicted values")
+  y_pred = pd.DataFrame(y_pred)
+  y_pred.rename(columns={0: 'Predicted CO2 emission classes'}, inplace=True)
+  #st.dataframe(y_pred.head(11))
+  
+  #st.text("short overview of real values")
+  y_test = pd.DataFrame(y_test)
+  y_test.rename(columns={0: 'Real CO2 emission classes'}, inplace=True)
+  #st.dataframe(y_test.head(11))
+
+  st.write(
+    f"""
+    <div style="display:flex">
+        <div style="flex:50%;padding-right:10px;">
+            {y_test.head(11).to_html()}
+        </div>
+        <div style="flex:50%">
+            {y_pred.head(11).to_html()}
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True
+  )
+
+
 
 # work on seventh page#################################################################################################
 if page == pages[7] : 
