@@ -179,7 +179,7 @@ if page == pages[4] :
         #st.write('r_squared of', model,'on test set:',round(r2_score(y_test, y_pred),4))
         #st.write('Mean Squared Error (MSE) on', model,':', round(mean_squared_error(y_test, y_pred),2))
  
-   def scores(reg_model,choice):
+  def scores(reg_model,choice):
     if choice == 'R2':
       return reg_model.r2_score(y_test,y_pred )
     elif choice == 'MSE':
