@@ -191,7 +191,29 @@ if page == pages[4] :
     st.write(round(r2_score(y_test,y_pred),3))
   elif display == 'MSE':
     st.write(round(mean_squared_error(y_test,y_pred),3))
+  st.subheader("Short overview of real and predicted values")
+  y_pred = pd.DataFrame(y_pred)
+  y_pred.rename(columns={0: 'Predicted CO2 emissions in g/km'}, inplace=True)
+  #st.dataframe(y_pred.head(11))
 
+  #st.text("short overview of real values")
+  y_test = pd.DataFrame(y_test)
+  y_test.rename(columns={0: 'Real CO2 emissions in g/km'}, inplace=True)
+  #st.dataframe(y_test.head(11))
+
+  st.write(
+    f"""
+    <div style="display:flex">
+        <div style="flex:50%;padding-right:10px;">
+            {y_test.head(11).to_html()}
+        </div>
+        <div style="flex:50%">
+            {y_pred.head(11).to_html()}
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True
+  )
 # work on fifth page ##############################################################################################
 if page == pages[5] : 
   st.text("")
