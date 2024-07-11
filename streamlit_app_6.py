@@ -146,7 +146,7 @@ if page == pages[4] :
   X_test = sc.transform(X_test)
 
 
-  st.dataframe(df.isna().sum())
+  st.dataframe(X.isna().sum())
     
   # define names and of files and models
   files = ['DecisionTreeRegressor().joblib', 'KNeighborsRegressor().joblib', 'LinearRegression().joblib','LogisticRegression().joblib']
