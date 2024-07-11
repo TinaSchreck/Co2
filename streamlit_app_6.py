@@ -142,8 +142,8 @@ if page == pages[4] :
    # transformation of test set
   from sklearn.preprocessing import StandardScaler
   sc = StandardScaler()
-  X_train = sc.fit_transform(X_train)
-  X_test = sc.transform(X_test) 
+  x_train = sc.fit_transform(x_train)
+  x_test = sc.transform(x_test) 
   
   # define models
   files = ['DecisionTreeRegressor().joblib', 'KNeighborsRegressor().joblib', 'LinearRegression().joblib', 'LogisticRegression().joblib']
