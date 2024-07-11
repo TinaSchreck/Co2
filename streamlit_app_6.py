@@ -170,7 +170,7 @@ if page == pages[4] :
         break
         
   # perform analysis after chosen model has been found
-    if selected_model:
+  if selected_model:
         # analysis for model
         #(f"Model '{selected_model_name}' geladen:", selected_model)
         
