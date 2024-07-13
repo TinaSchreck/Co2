@@ -180,6 +180,7 @@ if page == pages[4] :
           X_test = pd.DataFrame(X_test).fillna(X_test.mean())
 
           # Make predictions
+          model.fit(X_train, y_train)
           y_pred = selected_model.predict(X_test)
 
           # Display model performance
