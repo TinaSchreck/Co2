@@ -204,7 +204,7 @@ if page == pages[4] :
         # Short overview of real and predicted values
         #st.subheader("short overview of real values")
         y_test_df = pd.DataFrame(y_pred, columns=['Predicted CO2 emissions in France'])
-        y_test_df = pd.DataFrame(y_test).reset_index(drop=True
+        y_test_df = pd.DataFrame(y_test).reset_index(drop=True)
         y_test_df.columns = ['Real CO2 emissions in g/km']
 
         st.write(
