@@ -224,6 +224,9 @@ if page == pages[4] :
       except Exception as e:
         st.write (f'Error with {selected_model_name}: {e}')
 
+        # Ensure y_pred is defined even in case of error
+        y_pred = None  # or handle the error scenario as needed
+
 
 # work on fifth page ##############################################################################################
 if page == pages[5] : 
