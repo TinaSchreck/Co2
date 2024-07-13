@@ -187,6 +187,7 @@ if page == pages[4] :
           st.write(y_pred)
 
         # Performance metrics
+        y_pred = selected_model.predict(X_test)
         r2 = r2_score(y_test, y_pred)
         mse = mean_squared_error(y_test, y_pred)
         st.write(f"{selected_model_name} - R2 Score: {r2}, MSE: {mse}")
