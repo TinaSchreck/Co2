@@ -6,6 +6,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+from sklearn.externals import joblib
 from joblib import dump, load
 from sklearn.linear_model import LinearRegression, LogisticRegression
 from sklearn.tree import DecisionTreeRegressor
@@ -13,6 +14,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.metrics import r2_score, mean_squared_error
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 
 # read the dataframe
 df=pd.read_csv("cleaned_data_France_2015.csv")
@@ -140,24 +142,23 @@ if page == pages[4] :
   X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
   # transformation of test set
-  from sklearn.preprocessing import StandardScaler
   sc = StandardScaler()
   X_train = sc.fit_transform(X_train)
   X_test = sc.transform(X_test)
 
     
   # define names and of files and models
-  files = ['KNeighborsRegressor().joblib', 'LinearRegression().joblib','LogisticRegression().joblib']
-  names = ['KNeighbors', 'Linear Regression','Logistic Regression']
+  files = ['DecisionTreeRegressor().joblib','KNeighborsRegressor().joblib', 'LinearRegression().joblib','LogisticRegression().joblib']
+  names = ['Decision Tree','KNeighbors', 'Linear Regression','Logistic Regression']
 
   reg_models = []
 
   # load models and add to list 
   for file_name, name in zip(files, names):
-    model = load(file_name)
+    model = joblib.load(file_name)
     reg_models.append((name, model))
 
-  # choice of classification model
+  # choice of regression model
   selected_model_name = st.selectbox('Choice of regression model', names, key='choice_reg_model')
   ('The chosen regression model is:', selected_model_name)
 
@@ -170,52 +171,59 @@ if page == pages[4] :
             selected_model = model
             break
     
-    # perform analysis after chosen model has been found
-    if selected_model:
-        # analysis for model
-        #(f"Model '{selected_model_name}' geladen:", selected_model)
-        
-        # code for analysis
-        y_pred = selected_model.predict(X_test)
-        #st.write('r_squared of', model,'on test set:',round(r2_score(y_test, y_pred),4))
-        #st.write('Mean Squared Error (MSE) on', model,':', round(mean_squared_error(y_test, y_pred),2))
+  # Perform analysis after chosen model has been found
+        if selected_model:
+            try:
+                # Ensure there are no missing values in X_test
+                if pd.DataFrame(X_test).isnull().values.any():
+                    st.write(f"Missing values found in X_test for model {selected_model_name}")
+                    X_test = pd.DataFrame(X_test).fillna(X_test.mean())
 
-  def scores(reg_model,choice):
-    if choice == 'R2':
-      return reg_model.r2_score(y_test,y_pred )
-    elif choice == 'MSE':
-      return mean_squared_error(y_test,y_pred) 
+                # Make predictions
+                y_pred = selected_model.predict(X_test)
 
-  choice = model
+                # Display model performance
+                st.write(f"Predictions for {selected_model_name}:")
+                st.write(y_pred)
+
+                # Performance metrics
+                r2 = r2_score(y_test, y_pred)
+                mse = mean_squared_error(y_test, y_pred)
+                st.write(f"{selected_model_name} - R2 Score: {r2}, MSE: {mse}")
+
+  # Selection of performance metric to display
+  #choice = model
   display = st.radio('What do you want to show ?', ('R2', 'MSE'))
   if display == 'R2':
-    st.write(round(r2_score(y_test,y_pred),3))
+    st.write(f'R2 Score: {round(r2, 3)}')
   elif display == 'MSE':
-    st.write(round(mean_squared_error(y_test,y_pred),3))
+    st.write(f'Mean Squared Error: {round(mse, 3)})')
     
-  st.subheader("Short overview of real and predicted values")
-  y_pred = pd.DataFrame(y_pred)
-  y_pred.rename(columns={0: 'Predicted CO2 emissions in g/km'}, inplace=True)
-  #st.dataframe(y_pred.head(11))
+  
 
-  #st.text("short overview of real values")
-  y_test = pd.DataFrame(y_test)
-  y_test.rename(columns={0: 'Real CO2 emissions in g/km'}, inplace=True)
-  #st.dataframe(y_test.head(11))
+  # Short overview of real and predicted values
+  #st.subheader("short overview of real values")
+  y_test_df = pd.DataFrame(y_pred, columns=['Predicted CO2 emissions in France'])
+  y_test_df = pd.DataFrame(y_test).reset_index(drop=True
+  y_test_df.columns = ['Real CO2 emissions in g/km']
 
   st.write(
     f"""
     <div style="display:flex">
         <div style="flex:50%;padding-right:10px;">
-            {y_test.head(11).to_html()}
+            {y_test.head(11).to_html(index=False)}
         </div>
         <div style="flex:50%">
-            {y_pred.head(11).to_html()}
+            {y_pred.head(11).to_html(index=False)}
         </div>
     </div>
     """,
     unsafe_allow_html=True
   )
+except Exception as e:
+  st.write (f'Error with {selected_model_name}: {e}')
+
+
 # work on fifth page ##############################################################################################
 if page == pages[5] : 
   st.text("")
