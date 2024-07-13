@@ -220,7 +220,7 @@ if page == pages[4] :
     """,
     unsafe_allow_html=True
   )
-except Exception as e:
+  except Exception as e:
   st.write (f'Error with {selected_model_name}: {e}')
 
 
