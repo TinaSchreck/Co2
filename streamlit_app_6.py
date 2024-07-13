@@ -172,12 +172,12 @@ if page == pages[4] :
             break
     
   # Perform analysis after chosen model has been found
-        if selected_model:
-            try:
-                # Ensure there are no missing values in X_test
-                if pd.DataFrame(X_test).isnull().values.any():
-                    st.write(f"Missing values found in X_test for model {selected_model_name}")
-                    X_test = pd.DataFrame(X_test).fillna(X_test.mean())
+    if selected_model:
+      try:
+        # Ensure there are no missing values in X_test
+        if pd.DataFrame(X_test).isnull().values.any():
+          st.write(f"Missing values found in X_test for model {selected_model_name}")
+          X_test = pd.DataFrame(X_test).fillna(X_test.mean())
 
                 # Make predictions
                 y_pred = selected_model.predict(X_test)
@@ -186,42 +186,43 @@ if page == pages[4] :
                 st.write(f"Predictions for {selected_model_name}:")
                 st.write(y_pred)
 
-                # Performance metrics
-                r2 = r2_score(y_test, y_pred)
-                mse = mean_squared_error(y_test, y_pred)
-                st.write(f"{selected_model_name} - R2 Score: {r2}, MSE: {mse}")
+        # Performance metrics
+        r2 = r2_score(y_test, y_pred)
+        mse = mean_squared_error(y_test, y_pred)
+        st.write(f"{selected_model_name} - R2 Score: {r2}, MSE: {mse}")
 
-  # Selection of performance metric to display
-  #choice = model
-  display = st.radio('What do you want to show ?', ('R2', 'MSE'))
-  if display == 'R2':
-    st.write(f'R2 Score: {round(r2, 3)}')
-  elif display == 'MSE':
-    st.write(f'Mean Squared Error: {round(mse, 3)})')
+        # Selection of performance metric to display
+        #choice = model
+        display = st.radio('What do you want to show ?', ('R2', 'MSE'))
+        if display == 'R2':
+          st.write(f'R2 Score: {round(r2, 3)}')
+        elif display == 'MSE':
+          st.write(f'Mean Squared Error: {round(mse, 3)})')
     
   
 
-  # Short overview of real and predicted values
-  #st.subheader("short overview of real values")
-  y_test_df = pd.DataFrame(y_pred, columns=['Predicted CO2 emissions in France'])
-  y_test_df = pd.DataFrame(y_test).reset_index(drop=True
-  y_test_df.columns = ['Real CO2 emissions in g/km']
+        # Short overview of real and predicted values
+        #st.subheader("short overview of real values")
+        y_test_df = pd.DataFrame(y_pred, columns=['Predicted CO2 emissions in France'])
+        y_test_df = pd.DataFrame(y_test).reset_index(drop=True
+        y_test_df.columns = ['Real CO2 emissions in g/km']
 
-  st.write(
-    f"""
-    <div style="display:flex">
-        <div style="flex:50%;padding-right:10px;">
-            {y_test.head(11).to_html(index=False)}
-        </div>
-        <div style="flex:50%">
-            {y_pred.head(11).to_html(index=False)}
-        </div>
-    </div>
-    """,
-    unsafe_allow_html=True
-  )
-  except Exception as e:
-  st.write (f'Error with {selected_model_name}: {e}')
+        st.write(
+            f"""
+            <div style="display:flex">
+              <div style="flex:50%;padding-right:10px;">
+                  {y_test.head(11).to_html(index=False)}
+              </div>
+              <div style="flex:50%">
+                  {y_pred.head(11).to_html(index=False)}
+              </div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+      except Exception as e:
+        st.write (f'Error with {selected_model_name}: {e}')
 
 
 # work on fifth page ##############################################################################################
