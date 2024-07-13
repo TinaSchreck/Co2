@@ -179,12 +179,12 @@ if page == pages[4] :
           st.write(f"Missing values found in X_test for model {selected_model_name}")
           X_test = pd.DataFrame(X_test).fillna(X_test.mean())
 
-                # Make predictions
-                y_pred = selected_model.predict(X_test)
+          # Make predictions
+          y_pred = selected_model.predict(X_test)
 
-                # Display model performance
-                st.write(f"Predictions for {selected_model_name}:")
-                st.write(y_pred)
+          # Display model performance
+          st.write(f"Predictions for {selected_model_name}:")
+          st.write(y_pred)
 
         # Performance metrics
         r2 = r2_score(y_test, y_pred)
